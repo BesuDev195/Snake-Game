@@ -1,5 +1,7 @@
 const canava = document.querySelector(".canva");
 const ctx = canava.getContext("2d"); //todo ctx=context
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
 
 // creating scale
 const scale = 20;
@@ -37,8 +39,13 @@ function SnakeDirection(event) {
     d = "down";
   }
 }
-
-let playGame = setInterval(draw, 100);
+let playGame;
+startBtn.addEventListener("click", function () {
+  if (!playGame) {
+    // Check if the game is already running
+    playGame = setInterval(draw, 100); // Start the game loop
+  }
+});
 
 function draw() {
   ctx.clearRect(0, 0, canava.width, canava.height);
@@ -113,3 +120,8 @@ function eatSelf(head, array) {
   }
   return false;
 }
+stopBtn.addEventListener("click", function () {
+  clearInterval(playGame); 
+  playGame = null;
+  ctx.clearRect(0, 0, canava.width, canava.height);
+});
